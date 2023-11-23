@@ -1,15 +1,19 @@
--- custom/configs/null-ls.lua
-
 local null_ls = require "null-ls"
 
-local formatting = null_ls.builtins.formatting
-local lint = null_ls.builtins.diagnostics
+local b = null_ls.builtins
 
 local sources = {
-  formatting.prettier,
-  formatting.stylua,
-  formatting.clang_format,
-  lint.shellcheck,
+
+  -- webdev stuff
+  b.formatting.deno_fmt, -- choosed deno for ts/js files cuz its very fast!
+  b.formatting.prettier.with { filetypes = { "html", "markdown", "css" } }, -- so prettier works only on these filetypes
+  b.formatting.goimports,
+
+  -- Lua
+  b.formatting.stylua,
+
+  -- cpp
+  b.formatting.clang_format,
 }
 
 null_ls.setup {

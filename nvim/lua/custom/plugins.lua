@@ -1,70 +1,76 @@
+local overrides = require "custom.configs.overrides"
+
+---@type NvPluginSpec[]
 local plugins = {
 
+  -- Override plugin definition options
+  --
+  --Custom
+  --
+  -- Harpoon by ThePrimeagen
   { "ThePrimeagen/harpoon" },
-
-  { "elkowar/yuck.vim", lazy = false }, -- load a plugin at startup
-
-  -- You can use any plugin specification from lazy.nvim
+  --Debugging
+  { "mfussenegger/nvim-dap" },
+  { "leoluz/nvim-dap-go" },
+  { "rcarriga/nvim-dap-ui" },
+  --
+  --Custom
+  --
   {
-    "Pocco81/TrueZen.nvim",
-    cmd = { "TZAtaraxis", "TZMinimalist" },
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      -- format & linting
+      {
+        "jose-elias-alvarez/null-ls.nvim",
+        config = function()
+          require "custom.configs.null-ls"
+        end,
+      },
+    },
     config = function()
-      require "custom.configs.truezen" -- just an example path
-    end,
+      require "plugins.configs.lspconfig"
+      require "custom.configs.lspconfig"
+    end, -- Override to setup mason-lspconfig
   },
 
-  -- this opts will extend the default opts
+  -- override plugin configs
+  {
+    "williamboman/mason.nvim",
+    opts = overrides.mason,
+  },
+
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = { "html", "css", "bash" },
-    },
+    opts = overrides.treesitter,
   },
 
   {
-    "folke/which-key.nvim",
-    enabled = false,
+    "nvim-tree/nvim-tree.lua",
+    opts = overrides.nvimtree,
   },
 
-  -- If your opts uses a function call, then make opts spec a function*
-  -- should return the modified default config as well
-  -- here we just call the default telescope config
-  -- and then assign a function to some of its options
+  -- Install a plugin
   {
-    "nvim-telescope/telescope.nvim",
-    opts = function()
-      local conf = require "plugins.configs.telescope"
-      conf.defaults.mappings.i = {
-        ["<C-j>"] = require("telescope.actions").move_selection_next,
-        ["<Esc>"] = require("telescope.actions").close,
-      }
-
-      return conf
-    end,
-  },
-
-  {
-    "neovim/nvim-lspconfig",
+    "max397574/better-escape.nvim",
+    event = "InsertEnter",
     config = function()
-      require "plugins.configs.lspconfig"
-      require "custom.configs.lspconfig"
+      require("better_escape").setup()
     end,
   },
-  {
-    "neovim/nvim-lspconfig",
 
-    dependencies = {
-      "jose-elias-alvarez/null-ls.nvim",
-      config = function()
-        require "custom.configs.null-ls"
-      end,
-    },
+  -- To make a plugin not be loaded
+  -- {
+  --   "NvChad/nvim-colorizer.lua",
+  --   enabled = false
+  -- },
 
-    config = function()
-      require "plugins.configs.lspconfig"
-      require "custom.configs.lspconfig"
-    end,
-  },
+  -- All NvChad plugins are lazy-loaded by default
+  -- For a plugin to be loaded, you will need to set either `ft`, `cmd`, `keys`, `event`, or set `lazy = false`
+  -- If you want a plugin to load on startup, add `lazy = false` to a plugin spec, for example
+  -- {
+  --   "mg979/vim-visual-multi",
+  --   lazy = false,
+  -- }
 }
 
 return plugins
