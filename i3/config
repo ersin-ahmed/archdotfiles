@@ -192,7 +192,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #0a3a2a #0a3a2a #fbf1c7 #0a3a2a   #0a3a2a
+client.focused          #005858 #005858 #fbf1c7 #005858   #005858  
 client.focused_inactive #201547 #051C2C #fbf1c7 #051C2C   #051C2C 
 client.unfocused        #051C2C #051C2C #fbf1c7 #051C2C   #051C2C
 client.urgent           #201547 #900000 #ffffff #900000   #900000
@@ -210,7 +210,7 @@ smart_gaps off
 exec_always ~/.config/polybar/launch.sh &
 
 #exec_always feh --bg-fill ~/Pictures/monkey.jpg
-exec_always feh --bg-fill ~/Downloads/green8.png
+exec_always feh --bg-fill ~/Downloads/peakpx.jpg
 exec_always --no-startup-id picom & 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
