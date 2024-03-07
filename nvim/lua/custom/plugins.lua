@@ -14,6 +14,10 @@ local plugins = {
   { "leoluz/nvim-dap-go" },
   { "rcarriga/nvim-dap-ui" },
   --
+  --Themes
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  { "folke/tokyonight.nvim" },
+  --
   --Custom
   --
   {
